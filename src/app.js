@@ -37,10 +37,10 @@ app.get('/productos/1', (req, res) => {
 
 
 // Definir directorio public
-app.use(express.static('public'));
+app.use(express.static('../public'));
 
 // Lo mismo pero con otra url '/miurl'
-app.use('/miurl', express.static('public'));
+app.use('/miurl', express.static('../public'));
 
 // Configurar motor de vistas (activar ejs)
 app.set('view engine', 'ejs');
@@ -54,3 +54,8 @@ app.get('/ejs', (req, res) => {
 
   res.render('../views/index', {usuario});
 });
+
+// Requerir y usar las rutas de usuarios
+// Esto sirve para TODAS las rutas del archivo users.js
+const usersRoute = require('./routes/users');
+app.use(usersRoute);
