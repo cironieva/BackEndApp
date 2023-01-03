@@ -18,3 +18,19 @@ app.get('/home', (req, res) => {
 app.get('/index', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
+
+
+// Ruta principal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/root.html'));
+});
+
+// Ruta productos
+app.get('/productos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/productos.html'));
+});
+
+// Ruta producto 1
+app.get('/productos/1', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/producto1.html'));
+});
