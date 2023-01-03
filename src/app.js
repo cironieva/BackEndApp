@@ -34,3 +34,23 @@ app.get('/productos', (req, res) => {
 app.get('/productos/1', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/producto1.html'));
 });
+
+
+// Definir directorio public
+app.use(express.static('public'));
+
+// Lo mismo pero con otra url '/miurl'
+app.use('/miurl', express.static('public'));
+
+// Configurar motor de vistas (activar ejs)
+app.set('view engine', 'ejs');
+
+// Definir ruta para el ejs
+app.get('/ejs', (req, res) => {
+  const usuario = {
+    nombre: 'Facu',
+    apellido: 'Martinez'
+  }
+
+  res.render('../views/index', {usuario});
+});
