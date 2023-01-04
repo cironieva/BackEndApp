@@ -85,3 +85,74 @@ app.use((err, req, res, next) => {
   });
   next();
 });
+
+// Requerir cookie-parser, express-session y bcryptjs
+const cookieParser = require('cookie-parser');
+const sessions = require('express-session');
+const bcrypt = require('bcryptjs');
+
+// Activar solo cookie y session
+app.use(cookieParser());
+
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(sessions({
+  secret: '123456',
+  saveUninitialized: true,
+  cookie: {maxAge: oneDay},
+  resave: false
+}));
+
+
+// Ruta para get cookies
+app.get('/get-cookie', (req, res) => {
+  const cookies = req.cookies;
+  res.json({cookies});
+  console.log(cookies);
+});
+
+// Ruta para set cookies desde querys de URL
+app.get('/set-cookie', (req, res) => {
+  const {nombre, apellido} = req.query;
+  
+  res.cookie('nombre', nombre, {maxAge: 5000});
+  res.cookie('apellido', apellido, {maxAge: 5000});
+
+  res.send('Cookies seteadas');
+});
+
+
+// Ruta para get sessions
+app.get('/get-sessions', (req, res) => {
+  const sessions = req.session;
+  res.json({sessions});
+  console.log(sessions);
+});
+
+// Ruta para set sessions desde querys de URL
+app.get('/set-sessions', (req, res) => {
+  const session = req.query;
+  
+  req.session.session = session;
+
+  res.send(session);
+});
+
+
+// Ruta que hashea una password enviada en query
+app.get('/password-hashed', (req, res) => {
+  const passwordPlain = req.query.password;
+  const passwordHashed = bcrypt.hashSync(passwordPlain, 10);
+
+  res.send(passwordHashed);
+});
+
+// Ruta que valida la contraseña correcta
+
+const hash = '$2a$10$z.LR6Y9kcWx.8/Em8Z1bbeK94bdo8G9tLQtQJYmArml8y3ffi1nFi';
+
+app.get('/password-validated', (req, res) => {
+  const passwordPlain = req.query.password;
+  const isValid = bcrypt.compareSync(passwordPlain, hash);
+  
+  res.send(isValid);
+});
