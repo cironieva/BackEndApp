@@ -59,6 +59,11 @@ app.get('/ejs', (req, res) => {
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+// Usar morgan
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
 // Requerir y usar las rutas de usuarios
 // Esto sirve para TODAS las rutas del archivo users.js
 const usersRoute = require('./routes/users');
@@ -71,3 +76,12 @@ app.use(productsRoute)
 
 // Definir carpeta de views
 app.set('views', __dirname + '/views');
+
+// Middleware para manejar errores
+
+app.use((err, req, res, next) => {
+  res.json({
+    error: err.message
+  });
+  next();
+});
