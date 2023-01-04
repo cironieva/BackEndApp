@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+
+<h3>Lista de productos</h3>
+
+<% products.forEach(producto => { %>
+  <% if (producto.precio<=200) { %>
+    <p> <%= producto.descripcion %> </p>
+    <p> <%= producto.precio %> </p>
+  <% } %> 
+<% }) %>
+
+<%- include('partials/header') %>

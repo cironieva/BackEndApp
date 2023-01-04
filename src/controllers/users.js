@@ -1,3 +1,5 @@
+const bodyParser = require("body-parser");
+
 // Lista de usuarios
 const usuarios = [{
   id: 1,
@@ -29,4 +31,16 @@ const userList = (req, res) => {
   res.json(usuarios)
 }
 
-module.exports = {getUser, userList}
+
+// Función que obtiene vista del form
+const obtenerVista = (req, res) => {
+  res.render('form');
+}
+
+// Funcion que procesa el form
+const procesarForm = (req, res) => {
+  const user = req.body;
+  res.render('vistaUsuario', {user});
+}
+
+module.exports = {getUser, userList, obtenerVista, procesarForm}

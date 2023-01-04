@@ -55,7 +55,19 @@ app.get('/ejs', (req, res) => {
   res.render('../views/index', {usuario});
 });
 
+// Requerir y setear body-parser
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+
 // Requerir y usar las rutas de usuarios
 // Esto sirve para TODAS las rutas del archivo users.js
 const usersRoute = require('./routes/users');
 app.use(usersRoute);
+
+
+// Rutas de products
+const productsRoute = require('./routes/products');
+app.use(productsRoute)
+
+// Definir carpeta de views
+app.set('views', __dirname + '/views');
